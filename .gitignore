@@ -109,3 +109,8 @@ settings/settings.json
 settings/settings.*.json
 public/media
 localStorage.json
+package-lock.json
+package.json
+/PATH_TO_SETTINGS_FOLDER
+src-client/package-lock.json
+src-client/package.json

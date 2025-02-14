@@ -16,6 +16,7 @@
     "@apollo/client": "^3.7.2",
     "@ckeditor/ckeditor5-build-decoupled-document": "^35.3.2",
     "@ckeditor/ckeditor5-vue": "5.1.0",
+    "@quasar/cli": "^2.4.1",
     "@quasar/extras": "^1.16.12",
     "@wisegar-org/wgo-base-models": "0.0.4-0",
     "@wisegar-org/wgo-opengar-core-ui": "0.0.1-build.17",
