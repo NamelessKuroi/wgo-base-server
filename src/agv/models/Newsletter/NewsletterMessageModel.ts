@@ -12,13 +12,14 @@ import {
 } from "@wisegar-org/wgo-base-models";
 import { AGVNewsletterInscriptionModel } from "./NewsletterInscriptionModel";
 import { HandlebarsTemplateService } from "@wisegar-org/wgo-templating";
-import { HistoricModel } from "../../../historic";
-import { getInlineStyle, EmailModel } from "../../../email";
+import { EmailService } from "../../../services/email.service";
+import { getInlineStyle } from "../../../utils/email-style.utils";
+import { HistoryService } from "../../../services/historic.service";
 
 export class AGVNewsletterMessageModel {
   private repository: Repository<AGVNewsletterMessageEntity>;
-  private historyModel: HistoricModel<AGVNewsletterMessageEntity>;
-  private WGEmailModel: EmailModel;
+  private historyModel: HistoryService<AGVNewsletterMessageEntity>;
+  private WGEmailModel: EmailService;
   private inscriptionModel: AGVNewsletterInscriptionModel;
   private handlebardService: HandlebarsTemplateService;
   /**
@@ -26,8 +27,8 @@ export class AGVNewsletterMessageModel {
    */
   constructor(ctx: IContextBase) {
     this.repository = ctx.dataSource.getRepository(AGVNewsletterMessageEntity);
-    this.historyModel = new HistoricModel(AGVNewsletterMessageEntity, ctx);
-    this.WGEmailModel = new EmailModel(ctx);
+    this.historyModel = new HistoryService(AGVNewsletterMessageEntity, ctx);
+    this.WGEmailModel = new EmailService(ctx);
     this.inscriptionModel = new AGVNewsletterInscriptionModel(ctx);
     this.handlebardService = new HandlebarsTemplateService();
   }

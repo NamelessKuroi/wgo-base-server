@@ -10,18 +10,8 @@ import { AppContextHandler, ctx } from "./wgo/handlers/AppContextHandler";
 import { errorHandler } from "./wgo/handlers/ErrorHandler";
 import { getControllers } from "./wgo/controllers";
 
-import { createDatabase } from "typeorm-extension";
-import { roleSuperAdminSeeder, userAdminSeeder } from "./authentication";
-import { languageDefaultSeeder } from "./language";
-import { mediaPublicSeeder } from "./storage";
-import { settingsSeeder } from "./wgo/database/seeders/SettingsSeeder";
+import { createDatabase, dropDatabase } from "typeorm-extension";
 import { getResolvers } from "./wgo/resolvers";
-import {
-  boot,
-  ExpirationFreqEnum,
-  IServerOptions,
-  UseRestMiddleware,
-} from "./core";
 import { UseHandlebarsRenderMiddleware } from "./agv/middlewares/HandlebarsRenderMiddleware";
 import {
   UseAssetsHBHostMiddleware,
@@ -29,6 +19,12 @@ import {
   UsePublicMediaHostMiddleware,
 } from "./agv/middlewares/HostClientMiddleware";
 import { dataSourceOptions, PostgresDataSource } from "./database/data-source";
+import { rolesDataSeeder } from "./database/seeders/roles.seeder";
+import { usersDataSeeder } from "./database/seeders/users.seeder";
+import { IServerOptions } from "./interfaces/server-options.interface";
+import { UseRestMiddleware } from "./middlewares/rest.middleware";
+import { ExpirationFreqEnum } from "./core/services/JwtAuthService";
+import { boot } from "./handlers/boot.handler";
 
 const port = GetPortKey();
 
@@ -61,28 +57,37 @@ const serverOptions: IServerOptions = {
 boot(serverOptions, async () => {
   console.log("Start other services here. ex. database connections");
 
+  // await dropDatabase({
+  //   ifExist: true,
+  //   options: {
+  //     ...dataSourceOptions,
+  //     migrationsRun: false,
+  //     entities: [],
+  //     migrations: [],
+  //   },
+  // });
+
   await createDatabase({
     ifNotExist: true,
     options: {
       ...dataSourceOptions,
-      migrationsRun: false,
-      entities: [],
-      migrations: [],
+      migrationsRun: true,
     },
   });
+
   const dataSource = await PostgresDataSource.initialize();
   if (!dataSourceOptions.migrationsRun) {
     dataSource.runMigrations();
   }
 
   //Init db settings
-  await settingsSeeder(dataSource);
+  // await settingsSeeder(dataSource);
 
   //Core Seeders
-  await roleSuperAdminSeeder(dataSource); //create superadmin rol
-  await userAdminSeeder(dataSource); //create admin user with superadmin rol
-  await languageDefaultSeeder(dataSource); //create default language
-  await mediaPublicSeeder({ ...ctx, dataSource }); //export public media files
+  await rolesDataSeeder(dataSource);
+  await usersDataSeeder(dataSource);
+  // await languageDefaultSeeder(dataSource); //create default language
+  // await mediaPublicSeeder({ ...ctx, dataSource }); //export public media files
 
   // Loop function
   setTimeout(async () => {}, 0);

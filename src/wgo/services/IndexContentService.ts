@@ -2,20 +2,20 @@ import { Repository } from "typeorm";
 import { IIndexContentInput } from "../models/IndexContent";
 import IndexContentEntity from "../database/entities/IndexContentEntity";
 import { IContextBase } from "@wisegar-org/wgo-base-models";
-import { MediaModel } from "../../storage";
-import { TranslationModel } from "../../translation";
+import { MediaService } from "../../services/media.service";
+import { TranslationService } from "../../services/translation.service";
 
 export class IndexContentService {
   financeModuleRepository: Repository<IndexContentEntity>;
-  mediaModel: MediaModel;
+  mediaModel: MediaService;
   ctx: IContextBase;
-  translationModel: TranslationModel;
+  translationModel: TranslationService;
   constructor(ctx: IContextBase) {
     this.ctx = ctx;
     this.financeModuleRepository =
       ctx.dataSource.getRepository(IndexContentEntity);
-    this.mediaModel = new MediaModel(ctx);
-    this.translationModel = new TranslationModel(ctx);
+    this.mediaModel = new MediaService(ctx);
+    this.translationModel = new TranslationService(ctx);
   }
 
   async getFinanceIndexContent(urlApi: string) {

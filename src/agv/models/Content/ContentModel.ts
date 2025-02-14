@@ -1,17 +1,18 @@
-import { StorageEntity, StorageModel } from "../../../storage";
+import StorageEntity from "../../../database/entities/StorageEntity";
+import { StorageService } from "../../../services/storage.service";
 import { AGVContentsInput } from "../../resolvers/Content/AGVContentsInputs";
 import { StorageItem, IContextBase } from "@wisegar-org/wgo-base-models";
 
 const agvContentsType = "AGV_CONTENTS_TYPE";
 
 export class AGVContentModel {
-  private storageModel: StorageModel;
+  private storageModel: StorageService;
 
   /**
    *
    */
   constructor(ctx: IContextBase) {
-    this.storageModel = new StorageModel(ctx);
+    this.storageModel = new StorageService(ctx);
   }
 
   async getContents() {

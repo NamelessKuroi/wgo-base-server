@@ -4,21 +4,20 @@ import { PublicMediaResolver } from "./Media/MediaResolver";
 import { IndexContentResolver } from "./IndexContent/IndexContentResolver";
 import { FinanceIssuesResolver } from "./FinanceIssues/FinanceIssuesResolver";
 import { FinanceIssuesOptionsResolver } from "./FinanceIssuesOptions/FinanceIssuesOptionsResolver";
-import { CoreResolver } from "../../core";
-import { AuthResolver } from "../../authentication";
-import { LanguageResolver } from "../../language";
-import { SettingsResolver } from "../../settings";
-import { ContactMeResolver } from "../../contact";
-import { TemplateResolver } from "../../template";
-import { TranslationsResolver } from "../../translation";
-import { HistoricResolver } from "../../historic";
-import { MediaResolver, StorageResolver } from "../../storage";
-
 import { AGVEventResolver } from "../../agv/resolvers/Event/AGVEventResolver";
 import { AGVContentsResolver } from "../../agv/resolvers/Content/AGVContentsResolver";
 import { AGVNewsletterResolver } from "../../agv/resolvers/Newsletter/AGVNewsletterResolver";
 import { AGVInscriptionResolver } from "../../agv/resolvers/Inscription/AGVInscriptionResolver";
-import { EmailResolver } from "../../email";
+import { AuthResolver } from "../../resolvers/authentication.resolver";
+import { EmailResolver } from "../../resolvers/email.resolver";
+import { CoreResolver } from "../../resolvers/core.resolver";
+import { HistoricResolver } from "../../resolvers/history.resolver";
+import { LanguageResolver } from "../../resolvers/language.resolver";
+import { SettingsResolver } from "../../resolvers/settings.resolver";
+import { MediaResolver } from "../../resolvers/media.resolver";
+import { StorageResolver } from "../../resolvers/storage.resolver";
+import { TemplateResolver } from "../../resolvers/template.resolver";
+import { TranslationsResolver } from "../../resolvers/translation.resolver";
 
 export const getResolvers = () => {
   return [
@@ -29,9 +28,7 @@ export const getResolvers = () => {
     TranslationsResolver,
     SettingsResolver,
     PublicMediaResolver,
-    ContactMeResolver,
     TemplateResolver,
-    TranslationsResolver,
     HistoricResolver,
     MediaResolver,
     EmailResolver,
@@ -41,11 +38,9 @@ export const getResolvers = () => {
     FinanceIssuesOptionsResolver,
     CoreResolver,
     AuthResolver,
-    TranslationsResolver,
     LanguageResolver,
     SettingsResolver,
     PublicMediaResolver,
-    ContactMeResolver,
     TemplateResolver,
     HistoricResolver,
     EmailResolver,

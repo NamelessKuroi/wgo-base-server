@@ -15,10 +15,10 @@ import {
   translations,
   SUPERADMIN,
 } from "@wisegar-org/wgo-base-models";
-import { listenersEvents } from "../../settings";
-import { UserRolesModel } from "../../authentication";
-import { LanguageModel } from "../../language";
-import { IContextOptions } from "../../core";
+import { UserRolesService } from "../../services/users-roles.service";
+import { IContextOptions } from "../../interfaces/context-options.interface";
+import { LanguageService } from "../../services/language.service";
+import { listenersEvents } from "../../utils/settings.utils";
 
 export const ctx = <IContextBase>{
   dataSource: PostgresDataSource,
@@ -39,8 +39,8 @@ export const authArg = {
   transportEmailOptions: {},
 };
 
-const authModel = new UserRolesModel(authArg);
-const langModel = new LanguageModel(ctx);
+const authModel = new UserRolesService(authArg);
+const langModel = new LanguageService(ctx);
 
 export const AppContextHandler = async (options: IContextOptions) => {
   if (!options) {

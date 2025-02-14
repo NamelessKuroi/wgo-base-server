@@ -13,17 +13,19 @@ import {
   INewsletterInscriptionPageInput,
 } from "@wisegar-org/wgo-base-models";
 import { AGVInscriptionModel } from "../Inscription/InscriptionModel";
-import { getInlineStyle, EmailModel } from "../../../email";
-import { HistoricModel } from "../../../historic";
-import { HandlebarsTemplateModel, TemplateModel } from "../../../template";
+import { getInlineStyle } from "../../../utils/email-style.utils";
+import { EmailService } from "../../../services/email.service";
+import { HistoryService } from "../../../services/historic.service";
+import { TemplateService } from "../../../services/template.service";
+import { TemplateHandlebarsService } from "../../../services/template-handlebars.service";
 
 export class AGVNewsletterInscriptionModel {
   private repository: Repository<AGVNewsletterInscriptionEntity>;
-  private historicModel: HistoricModel<AGVNewsletterInscriptionEntity>;
-  private WGEmailModel: EmailModel;
+  private historicModel: HistoryService<AGVNewsletterInscriptionEntity>;
+  private WGEmailModel: EmailService;
   private inscriptionModel: AGVInscriptionModel;
-  private templateModel: TemplateModel;
-  private handlebardModel: HandlebarsTemplateModel;
+  private templateModel: TemplateService;
+  private handlebardModel: TemplateHandlebarsService;
   /**
    *
    */
@@ -31,11 +33,14 @@ export class AGVNewsletterInscriptionModel {
     this.repository = ctx.dataSource.getRepository(
       AGVNewsletterInscriptionEntity
     );
-    this.historicModel = new HistoricModel(AGVNewsletterInscriptionEntity, ctx);
-    this.WGEmailModel = new EmailModel(ctx);
+    this.historicModel = new HistoryService(
+      AGVNewsletterInscriptionEntity,
+      ctx
+    );
+    this.WGEmailModel = new EmailService(ctx);
     this.inscriptionModel = new AGVInscriptionModel(ctx);
-    this.templateModel = new TemplateModel(ctx);
-    this.handlebardModel = new HandlebarsTemplateModel();
+    this.templateModel = new TemplateService(ctx);
+    this.handlebardModel = new TemplateHandlebarsService();
   }
 
   async getInscriptionPage(data: INewsletterInscriptionPageInput) {
